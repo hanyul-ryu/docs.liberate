@@ -4,7 +4,7 @@
   ],
   "pluginsConfig": {
     "versions": {
-      "type": "branches"
+      "type": "tags"
     }
   }
 }
