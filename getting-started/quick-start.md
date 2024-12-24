@@ -16,8 +16,8 @@ The following example shows the high level APIs of Liberate.FHE which can be use
 from liberate import fhe
 from liberate.fhe import presets
 
-# Generate ckks engine
-grade = "silver"
+# Generate CKKS engine with preset parameters
+grade = "silver"  # logN=15
 params = presets.params[grade]
 
 engine = fhe.ckks_engine(**params, verbose=True)
@@ -33,16 +33,16 @@ m1 = engine.example(-10, 10)
 
 # encode & encrypt data
 ct0 = engine.encorypt(m0, pk)
-ct1 = engine.encorypt(m1, pk)
+ct1 = engine.encorypt(m1, pk, level=5)
 
 # (a + b) * b - a
 result = (m0 + m1) * m1 - m0
-ct_add = engine.add(ct0, ct1)
-ct_mult = engine.mult(ct1, ct_add)
+ct_add = engine.add(ct0, ct1)  # auto leveling
+ct_mult = engine.mult(ct1, ct_add, evk)
 ct_result = engine.sub(ct_mult, ct0)
 
 # decrypt & decode data
-result_decrypted = engine.decrode(ct, sk)
+result_decrypted = engine.decrode(ct_result, sk)
 
 ```
 {% endcode %}
