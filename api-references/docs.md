@@ -12,8 +12,6 @@ Last but not least, this document showcases the utility functions offered by the
 
 Overall, this comprehensive document serves as an indispensable guide for users seeking to harness the full potential of the Liberate.FHE library for Homomorphic Encryption. It covers a wide range of topics, ensuring a thorough understanding of the library's capabilities and empowering users to leverage its advanced features for secure and efficient computations.
 
-
-
 ## Before Moving on...
 
 This documentation only covers the _high-level_ APIs of the library. That is, only the publicly exposed functions are explained. There are numerous internal functions that compose the library; however, those are not documented herein.
@@ -61,7 +59,7 @@ The grammar of calling the context generate functions is as follows:
 
 {% code title="generate_ckks_context" %}
 ```python
-from liberate.fhe context import ckks_context
+from liberate.fhe.context import ckks_context
 
 ctx = ckks_context(buffer_bit_length=62,
                    scale_bits=40,
@@ -87,7 +85,7 @@ where,
 * `scale_bits` : Specifies the scale. The scale will be set to . Note that the bits allocated for the integral part of the message will be `buffer_bit_length - scale_bits - 2`.
 * `logN` : Specifies the length of the message polynomial. The length of the polynomial is $$2^{\text{logN}}$$ , and the actual length of the message that can be encoded in the polynomial is . The means you $$2^{\text{logN}}/2 = 2^{\text{logN} - 1}$$ can fill the polynomial with $$2^{\text{logN}-1}$$ complex numbers.
 * `num_scales` : Specifies the number of utilizable homomorphic levels. If not specified explicitly, the context generator will generate the _maximum_ number of levels available given the `logN` and the security requirements.
-* `num_special_primes` : This number corresponds to the  factor in hybrid key switching. The specified number of primes will be subtracted from the available levels and then used for key switching.
+* `num_special_primes` : This number corresponds to the factor in hybrid key switching. The specified number of primes will be subtracted from the available levels and then used for key switching.
 * `sigma`: The standard deviation of the discrete Gaussian sampling, when generating small errors.
 * `uniform_ternary_secret`: Selects the random algorithm when sampling the secret key. Currently this parameter has _no effect_, and the engine sticks to the uniform ternary sampling method.
 * `cache_folder`: The path to the cache folder.
@@ -205,7 +203,7 @@ evk = engine.create_evk(sk=sk)
 
 ### The Rotation key Generations
 
-The galois key galk is a collection of key switch keys that enable the $$n$$ cyclic rotations. For a polynomial of length $$N$$, all possible rotations can be represented by $$\log_{2}\left(N\right)$$ rotations. The galk contains such $$\log_{2}\left(N\right)$$  keys. The key generation API is
+The galois key galk is a collection of key switch keys that enable the $$n$$ cyclic rotations. For a polynomial of length $$N$$, all possible rotations can be represented by $$\log_{2}\left(N\right)$$ rotations. The galk contains such $$\log_{2}\left(N\right)$$ keys. The key generation API is
 
 ```python
 galk = engine.create_galois_key(sk=sk)
@@ -298,8 +296,6 @@ m = engine.decrode(ct, sk)
 ```
 
 , where `sk` is a secret key.
-
-
 
 ## Arithmetic Functions
 
@@ -470,7 +466,7 @@ data_struct_str = data_struct.kind
 engine.save(data_struct, filename=None)
 ```
 
-You can save all variable with `data_struct` like `cipher text`, `secret key`, `public key`, `key swithching key`, `rotation key` and `galois key`.&#x20;
+You can save all variable with `data_struct` like `cipher text`, `secret key`, `public key`, `key swithching key`, `rotation key` and `galois key`.
 
 ```python
 sk = engine.create_secret_key()
@@ -519,7 +515,5 @@ engine.print_data_structure(text, level)
   ├── tensor at device 1 with shape torch.Size([3, 32768]).
   └── tensor at device 0 with shape torch.Size([1, 32768]).
 ```
-
-
 
 _**TBD**_
